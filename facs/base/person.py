@@ -36,8 +36,8 @@ with open("covid_data/vaccinations.yml", encoding="utf-8") as f:
     vac_data = yaml.safe_load(f)
     antivax_chance = vac_data["antivax_fraction"]
 
-immune_duration = read_disease_yml("covid_data/disease_covid19.yml").immunity_duration
-immunity_fraction = read_disease_yml("covid_data/disease_covid19.yml").immunity_fraction
+immune_duration = read_disease_yml("covid_data/disease_measles.yml").immunity_duration
+immunity_fraction = read_disease_yml("covid_data/disease_measles.yml").immunity_fraction
 
 
 @dataclass

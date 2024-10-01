@@ -33,14 +33,14 @@ def parse_arguments() -> dict:
         "-m",
         "--measures_yml",
         action="store",
-        default="measures_uk",
+        default="measures_lt",
         help="Input YML file containing interventions.",
     )
     parser.add_argument(
         "-d",
         "--disease_yml",
         action="store",
-        default="disease_covid19",
+        default="disease_measles",
         help="Input YML file containing disease specification.",
     )
     parser.add_argument(

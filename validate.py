@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 def load_output_data(out_dir):
     """Load the output data from the FACS model."""
 
-    filename = f"{out_dir}/out.csv"
+    filename = f"{out_dir}/klaipeda-measures_lt.csv"
     facs_output = pd.read_csv(filename, sep=",", encoding="latin1")
 
     return facs_output
@@ -35,7 +35,7 @@ def validate():
 
     d_sim = load_output_data(sys.argv[1])
     d_adm = load_admissions_data(sys.argv[1])
-    start_date = datetime.strptime("1/3/2020", "%d/%m/%Y")
+    start_date = datetime.strptime("2/7/2023", "%d/%m/%Y")
 
     # Validation data preprocessing.
     d_adm["date"] = pd.to_datetime(d_adm["date"], format="%d/%m/%Y")
@@ -48,12 +48,14 @@ def validate():
     for _, row in d_adm.iterrows():
         day = int(row["days"])
         adm = int(row["admissions"])
-        adm_sim = d_sim.loc[d_sim["#time"] == day]["num hospitalisations today"].values[
-            0
-        ]
-        validation_table["days"].append(day)
-        validation_table["admissions"].append(adm)
-        validation_table["admissions sim"].append(adm_sim)
+        print(f"Checking for day: {day}")  # Debugging statement
+        if not d_sim.loc[d_sim["#time"] == day].empty:
+            adm_sim = d_sim.loc[d_sim["#time"] == day]["num hospitalisations today"].values[0]
+            validation_table["days"].append(day)
+            validation_table["admissions"].append(adm)
+            validation_table["admissions sim"].append(adm_sim)
+        else:
+            print(f"No matching record for day {day} in simulation output.")  # Debugging statement
 
     # conversion from dict to DF.
     d_val = pd.DataFrame.from_dict(validation_table)
